@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using KMD1.Models;
 using KMD1.CRUD;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace KMD1.Controllers
 {
@@ -17,7 +17,7 @@ namespace KMD1.Controllers
         {
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult AddMeeting()
         {

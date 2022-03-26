@@ -1,17 +1,21 @@
 ﻿using KMD1.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace KMD1.Controllers
 {
     public class UserController : Controller
     {
         private UserManager<ApplicationUser> userManager;
-        public UserController(UserManager<ApplicationUser> userManager)
+        private RoleManager<ApplicationRoles> roleManager;
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRoles> roleManager)
         {
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
         public ViewResult Create() => View();
+        public ViewResult CreateRole() => View();
 
         [HttpPost]
         public async Task<IActionResult> Create(Users user)
@@ -36,6 +40,23 @@ namespace KMD1.Controllers
                 }
             }
             return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRole([Required] string name)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityResult result = await roleManager.CreateAsync(new ApplicationRoles() { Name = name });
+                if (result.Succeeded)
+                    ViewBag.Message = "Role Created Successfully";
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
+                        ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View();
         }
         public IActionResult Index()
         {
