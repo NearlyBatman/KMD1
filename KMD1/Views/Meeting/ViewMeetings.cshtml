@@ -1,5 +1,5 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
@@ -8,33 +8,57 @@
 @model IEnumerable<Meeting>
 
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Location)
-                </th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            @foreach(var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink(item.Name, "ViewMeetingRoom")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.Location)
-                    </td>
-                </tr>
-            }
-        </tbody>
-        
-    </table>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Name)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Location)
+			</th>
+		</tr>
+	</thead>
 
-    @*
-    *@
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@using (Html.BeginForm("ViewMeetingRoom", "Meeting"))
+					{
+
+						<input type="hidden" name="id" value="@item.Id" />
+						<input type="hidden" name="name" value="@item.Name" />
+						<input type="hidden" name="participants" value="@item.Participants" />
+						<input type="hidden" name="location" value="@item.Location" />
+						<input type="hidden" name="time" value="@item.Time" />
+
+						<input type="submit" value="@item.Name" />
+						
+					}
+
+
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Location)
+				</td>
+			</tr>
+		}
+	</tbody>
+
+</table>
+
+@*
+						<form method="post" asp-controller="Meeting" asp-action="ViewMeetingRoom">
+						<input type="hidden" name="meeting" value="@item.Id" />
+
+						<button type="submit">
+							<p>@item.Name</p>
+						</button>
+					</form>
+	@Html.ActionLink(item.Name, new {id =item.Id})
+
+	@Html.ActionLink("Test", "ViewMeetingRoom", "Meeting", new {id =item.Id}, null)
+	@Html.Action(item.Name, "ViewMeetingRoom", "Meeting", new {id =item.Id})
+*@

@@ -1,24 +1,44 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	<h1 class="display-4">Welcome</h1>
+	<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<form method="post" asp-controller="Meeting" asp-action="AddMeeting">
-    <button type="submit">
-        <p>Add Meeting</p>
-    </button>
-</form>
 
-<form method="post" asp-controller="Meeting" asp-action="ViewMeetings">
-    <button type="submit">
-        <p>View Meetings</p>
-    </button>
-</form>
-<form method="post" asp-controller="User" asp-action="Create">
-    <button type="submit">
-        <p>Create User</p>
-    </button>
-</form>
+@{
+	if (User?.Identity?.IsAuthenticated == false)
+	{
+		<form method="post" asp-controller="User" asp-action="Create">
+			<button type="submit">
+				<p>Create User</p>
+			</button>
+		</form>
+		<form method="post" asp-controller="Account" asp-action="Login">
+			<button type="submit">
+				<p>Login</p>
+			</button>
+		</form>
+
+	}
+}
+
+
+
+@{
+	if (User?.Identity?.IsAuthenticated ?? false)
+	{
+		<form method="post" asp-controller="Meeting" asp-action="AddMeeting">
+			<button type="submit">
+				<p>Add Meeting</p>
+			</button>
+		</form>
+
+		<form method="post" asp-controller="Meeting" asp-action="ViewMeetings">
+			<button type="submit">
+				<p>View Meetings</p>
+			</button>
+		</form>
+	}
+}

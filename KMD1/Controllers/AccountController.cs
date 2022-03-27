@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace KMD1.Controllers
 {
@@ -23,7 +24,6 @@ namespace KMD1.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([Required][EmailAddress] string email, [Required] string password)
         {
@@ -45,7 +45,6 @@ namespace KMD1.Controllers
         }
 
 
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();

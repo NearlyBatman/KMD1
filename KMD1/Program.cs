@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<TestCrud>();
+builder.Services.AddScoped<MeetingCrud>();
 builder.Services.AddIdentity<ApplicationUser, ApplicationRoles>().AddMongoDbStores<ApplicationUser, ApplicationRoles, Guid>(
     builder.Configuration.GetConnectionString("MeetingDb"), "Users"
     );

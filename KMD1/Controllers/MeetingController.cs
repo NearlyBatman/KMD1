@@ -9,16 +9,17 @@ namespace KMD1.Controllers
 {
     public class MeetingController : Controller
     {
-        private readonly TestCrud tCrud;
-
-        public MeetingController(TestCrud tCrud)
+        private readonly MeetingCrud mCrud;
+        //Mangler [Authorize], da jeg ikke kan få den til at fungere
+        public MeetingController(MeetingCrud mCrud)
         {
-            this.tCrud = tCrud;
+            this.mCrud = mCrud;
         }
         public IActionResult Index()
         {
             return View();
         }
+        
         [HttpPost]
         public IActionResult AddMeeting()
         {
@@ -26,37 +27,11 @@ namespace KMD1.Controllers
         }
         public IActionResult ViewMeetings()
         {
-            var test = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-            return View(tCrud.Get(test));
+            return View(mCrud.Get(userId));
         }
 
-        [HttpPost]
-        public IActionResult NewMeetings(Meeting newMeet)
-        {
-            //newMeet.
-            if (ModelState.IsValid)
-            {
-                //tCrud.Create(newMeet);
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View("AddMeeting", newMeet);
-        }
-        /*
-        [HttpPost]
-        public IActionResult NewMeetingss(Meeting newMeet)
-        {
-            if (ModelState.IsValid)
-            {
-                newMeet.Id = Guid.NewGuid();
-                var test = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                tCrud.Create(test, newMeet);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(newMeet);
-        }
-        */
         [HttpPost]
         public async Task<IActionResult> NewMeeting(Meeting newMeet)
         {
@@ -66,8 +41,8 @@ namespace KMD1.Controllers
                 if (newMeet.ParCheck(newMeet.Participants))
                 {
                     newMeet.Id = Guid.NewGuid();
-                    var test = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    await tCrud.Add(test, newMeet);
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    await mCrud.AddMeeting(userId, newMeet);
                 }
                 else
                 {
@@ -79,8 +54,11 @@ namespace KMD1.Controllers
         }
 
         [HttpPost]
-        public IActionResult ViewMeetingRoom(Meeting meeting)
+        public IActionResult ViewMeetingRoom(IFormCollection form)
         {
+            // En meget hacky løsning
+            var meeting = new Meeting(form["name"], form["time"], form["location"], Int32.Parse(form["participants"]));
+            meeting.Id = Guid.Parse(form["id"]);
             return View(meeting);
         }
     }

@@ -18,6 +18,7 @@ namespace KMD1.Models
         {
 
         }
+
         public Meeting(string name, string time, string location, int participants)
         {
             this.Name=name;
