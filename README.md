@@ -1,5 +1,5 @@
 # KMD1
-Efter jeg klonede mit repository over til min bærbar var der nogle problemer med gendannelse af nogle Nuget Packages
+Efter jeg klonede mit repository over til min bærbar var der nogle problemer med gendannelse af nogle Nuget Packages.
 Efter genstartning flere gange og nogle forsøg med jeg-ved-ikke-hvad virkede projektet, håber ikke det sker for jer
 ellers beklager jeg meget og kan kun håbe og tigge om at det ikke trækker ned i jeres helhedsvurdering
 
