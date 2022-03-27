@@ -1,5 +1,6 @@
 using KMD1.CRUD;
 using KMD1.Models;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddScoped<TestCrud>();
 builder.Services.AddIdentity<ApplicationUser, ApplicationRoles>().AddMongoDbStores<ApplicationUser, ApplicationRoles, Guid>(
     builder.Configuration.GetConnectionString("MeetingDb"), "Users"
     );
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

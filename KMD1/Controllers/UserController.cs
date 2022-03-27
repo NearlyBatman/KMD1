@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace KMD1.Controllers
 {
@@ -20,6 +21,7 @@ namespace KMD1.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Users user)
         {
+
             if(ModelState.IsValid)
             {
                 ApplicationUser appUser = new ApplicationUser

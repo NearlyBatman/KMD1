@@ -3,6 +3,8 @@
 *@
 @{
 }
+
+
 @model IEnumerable<Meeting>
 
 
@@ -10,10 +12,10 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.name)
+                    @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.location)
+                    @Html.DisplayNameFor(model => model.Location)
                 </th>
             </tr>
         </thead>
@@ -23,13 +25,16 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(model => item.name)
+                        @Html.ActionLink(item.Name, "ViewMeetingRoom")
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.location)
+                        @Html.DisplayFor(model => item.Location)
                     </td>
                 </tr>
             }
         </tbody>
         
     </table>
+
+    @*
+    *@
